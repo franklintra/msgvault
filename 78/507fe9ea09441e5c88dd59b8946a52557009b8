@@ -1,0 +1,23 @@
+internal/imap/batch_fetch.go
+  s_89530d68e3bbbf::t_da4cc79494d1ba 345-393,716,729,753,803
+internal/imap/batch_fetch_test.go
+  s_89530d68e3bbbf::t_d32a2ea995dc65 1052-1165
+internal/imap/client.go
+  s_89530d68e3bbbf::t_05442e334bab84 781-793,1043,1061
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "78507fe9ea09441e5c88dd59b8946a52557009b8",
+  "prompts": {},
+  "sessions": {
+    "s_89530d68e3bbbf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "92e41829-52c1-4daa-a32e-024ff4355e70",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}
