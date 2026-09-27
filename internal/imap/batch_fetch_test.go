@@ -1163,3 +1163,75 @@ func TestEmptyHeaderFieldsSectionFallsBackToFullHeader(t *testing.T) {
 		assert.Empty(missing)
 	})
 }
+
+func TestFullHeaderFallbackReselectFailureEndsTheBatch(t *testing.T) {
+	listener, err := net.Listen("tcp", "127.0.0.1:0")
+	require.NoError(t, err)
+	t.Cleanup(func() { _ = listener.Close() })
+	unselectedFetches := make(chan string, 16)
+	go func() {
+	sessions:
+		for session := range 2 {
+			conn, acceptErr := listener.Accept()
+			if acceptErr != nil {
+				return
+			}
+			defer func() { _ = conn.Close() }()
+			_, _ = io.WriteString(conn, "* OK [CAPABILITY IMAP4rev1] synthetic server ready\r\n")
+			reader := bufio.NewReader(conn)
+			for {
+				line, readErr := reader.ReadString('\n')
+				if readErr != nil {
+					return
+				}
+				tag, command, _ := strings.Cut(strings.TrimSpace(line), " ")
+				upper := strings.ToUpper(command)
+				switch {
+				case strings.HasPrefix(upper, "LOGIN"):
+					_, _ = fmt.Fprintf(conn, "%s OK LOGIN completed\r\n", tag)
+				case strings.HasPrefix(upper, "SELECT"):
+					if session == 1 {
+						_, _ = fmt.Fprintf(conn, "%s NO [NONEXISTENT] mailbox no longer exists\r\n", tag)
+						continue
+					}
+					_, _ = fmt.Fprintf(conn,
+						"* FLAGS (\\Seen)\r\n* %d EXISTS\r\n* OK [UIDVALIDITY 1]\r\n* OK [UIDNEXT %d]\r\n",
+						fetchChunkSize+1, fetchChunkSize+2)
+					_, _ = fmt.Fprintf(conn, "%s OK [READ-WRITE] SELECT completed\r\n", tag)
+				case strings.HasPrefix(upper, "UID FETCH"):
+					if session == 1 {
+						unselectedFetches <- upper
+						_, _ = fmt.Fprintf(conn, "%s BAD no mailbox selected\r\n", tag)
+						continue
+					}
+					if !strings.Contains(upper, "HEADER.FIELDS") {
+						// Disconnect during the full-header fallback. The new
+						// connection can log in but cannot select the mailbox.
+						_ = conn.Close()
+						continue sessions
+					}
+					for uid := 1; uid <= fetchChunkSize; uid++ {
+						_, _ = fmt.Fprintf(conn,
+							"* %d FETCH (UID %d FLAGS () BODY[HEADER.FIELDS (\"MESSAGE-ID\")] {0}\r\n)\r\n", uid, uid)
+					}
+					_, _ = fmt.Fprintf(conn, "%s OK UID FETCH completed\r\n", tag)
+				case strings.HasPrefix(upper, "LOGOUT"):
+					_, _ = fmt.Fprintf(conn, "* BYE closing\r\n%s OK LOGOUT completed\r\n", tag)
+					return
+				default:
+					_, _ = fmt.Fprintf(conn, "%s BAD unsupported synthetic command\r\n", tag)
+				}
+			}
+		}
+	}()
+	client := newTestClient(t, listener.Addr().String())
+	messageIDs := make([]string, fetchChunkSize+1)
+	for i := range messageIDs {
+		messageIDs[i] = fmt.Sprintf("INBOX|%d", i+1)
+	}
+
+	_, err = client.GetMessageLabelsBatch(t.Context(), messageIDs)
+
+	require.ErrorContains(t, err, "mailbox no longer exists")
+	assert.Empty(t, unselectedFetches, "the batch must stop before fetching another chunk")
+}

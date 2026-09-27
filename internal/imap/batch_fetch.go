@@ -309,9 +309,9 @@ func (c *Client) selectBatchMailbox(
 }
 
 // fetchChunk runs one UID FETCH, reconnecting and retrying once on network
-// errors. fatal reports that the connection could not be re-established and
-// the whole batch should be abandoned; otherwise a non-nil error is local
-// to this chunk.
+// errors. fatal reports that the connection or selected mailbox could not be
+// re-established and the whole batch should be abandoned; otherwise a non-nil
+// error is local to this chunk.
 func (c *Client) fetchChunk(
 	ctx context.Context,
 	mailbox string,
@@ -332,7 +332,7 @@ func (c *Client) fetchChunk(
 	}
 	if selErr := c.selectMailbox(mailbox); selErr != nil {
 		c.logger.Warn("mailbox reselect failed after reconnect", "mailbox", mailbox, "error", selErr)
-		return nil, false, selErr
+		return nil, true, selErr
 	}
 	msgs, err = c.conn.Fetch(uidSet, fetchOpts).Collect()
 	if err != nil {
@@ -474,9 +474,7 @@ func (c *Client) recheckOmittedRaw(
 	}
 	msgs, fatal, err := c.fetchChunk(ctx, mailbox, uidSet, fetchOpts)
 	if fatal {
-		// The reconnect failed, so there is no connection left to run the next
-		// chunk on. The batch has to end here, exactly as it does when the
-		// first fetch of a chunk hits this.
+		// Without a connection and selected mailbox, later chunks cannot run.
 		return nil, err
 	}
 	if err != nil {
