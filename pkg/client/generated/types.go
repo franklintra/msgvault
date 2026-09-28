@@ -4585,6 +4585,17 @@ func (h HybridGenerationSummary) Validate() error {
 	return runtime.ConvertValidatorError(typesValidator.Struct(h))
 }
 
+type HybridRerankSummary struct {
+	Applied    bool    `json:"applied"`
+	Candidates int64   `json:"candidates"`
+	Fallback   *string `json:"fallback,omitzero"`
+	Model      string  `json:"model" validate:"required"`
+}
+
+func (h HybridRerankSummary) Validate() error {
+	return runtime.ConvertValidatorError(typesValidator.Struct(h))
+}
+
 type HybridSearchItem struct {
 	Bcc              []string            `json:"bcc,omitempty"`
 	Cc               []string            `json:"cc,omitempty"`
@@ -4668,6 +4679,7 @@ type HybridSearchResponse struct {
 	Mode             string                  `json:"mode" validate:"required"`
 	PoolSaturated    bool                    `json:"pool_saturated"`
 	Query            string                  `json:"query" validate:"required"`
+	Rerank           *HybridRerankSummary    `json:"rerank,omitempty"`
 	Results          []HybridSearchItem      `json:"results" validate:"required"`
 	Returned         int64                   `json:"returned"`
 	ScopeLabel       *string                 `json:"scope_label,omitzero"`
@@ -4689,6 +4701,13 @@ func (h HybridSearchResponse) Validate() error {
 	if err := typesValidator.Var(h.Query, "required"); err != nil {
 		errors = errors.Append("Query", err)
 	}
+	if h.Rerank != nil {
+		if v, ok := any(h.Rerank).(runtime.Validator); ok {
+			if err := v.Validate(); err != nil {
+				errors = errors.Append("Rerank", err)
+			}
+		}
+	}
 	for i, item := range h.Results {
 		if v, ok := any(item).(runtime.Validator); ok {
 			if err := v.Validate(); err != nil {
@@ -4708,9 +4727,10 @@ func (h HybridSearchResponse) Validate() error {
 }
 
 type HybridSearchTimings struct {
-	HydrationMs      int64 `json:"hydration_ms"`
-	QueryEmbeddingMs int64 `json:"query_embedding_ms"`
-	RetrievalMs      int64 `json:"retrieval_ms"`
+	HydrationMs      int64  `json:"hydration_ms"`
+	QueryEmbeddingMs int64  `json:"query_embedding_ms"`
+	RerankMs         *int64 `json:"rerank_ms,omitempty"`
+	RetrievalMs      int64  `json:"retrieval_ms"`
 }
 
 type IdentityConfirmationOutcome struct {
@@ -10885,6 +10905,7 @@ func (s ScopeProvenance) Validate() error {
 
 type ScoreBreakdown struct {
 	Bm25           *float64 `json:"bm25,omitempty"`
+	Rerank         *float64 `json:"rerank,omitempty"`
 	Rrf            *float64 `json:"rrf,omitempty"`
 	SubjectBoosted *bool    `json:"subject_boosted,omitempty"`
 	Vector         *float64 `json:"vector,omitempty"`
