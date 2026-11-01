@@ -1,0 +1,46 @@
+docs/usage/document-indexing.md
+  s_759e0432d345bf::t_d63afe7ab02b68 279-280
+  s_b5b8a83fef8908::t_11d665cb480d56 259-278,281-285
+cmd/msgvault/cmd/documents.go
+  s_759e0432d345bf::t_3fd4358f5452f1 17-18,842-844,932,939-945,947-952,961,965,975-977,980-987,1018-1071
+cmd/msgvault/cmd/documents_docling_test.go
+  s_759e0432d345bf::t_8ee543443f3f77 10-12,16,18,203-405
+docs/changelog.md
+  s_759e0432d345bf::t_9f4f1e7e03c742 11
+docs/configuration.md
+  s_759e0432d345bf::t_b237c507c3d4f5 516
+internal/config/documentindex_config_test.go
+  s_759e0432d345bf::t_a002eeb7f14df4 223
+internal/documentindex/config.go
+  s_759e0432d345bf::t_207e1d7bdda568 54,77,115,257-261
+internal/documentindex/docling_config.go
+  s_759e0432d345bf::t_eac610fcda97cb 93-95,137-139
+internal/documentindex/docling_config_test.go
+  s_759e0432d345bf::t_b421bd901619d4 180-206
+internal/documentindex/docling_worker.go
+  s_759e0432d345bf::t_8b086f9d8bf1d3 142-143
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1c0a37afdb3461eba2628076f8002c62df5c5e92",
+  "prompts": {},
+  "sessions": {
+    "s_759e0432d345bf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ddb4dae6-2cd9-49ae-ae69-66fbdf85e02a",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    },
+    "s_b5b8a83fef8908": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7c82c37a-2b08-4772-9071-3309962a2ab5",
+        "model": "unknown"
+      },
+      "human_author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}
