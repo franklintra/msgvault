@@ -1,5 +1,5 @@
 ---
-last_edited: "2026-10-08"
+last_edited: "2026-11-06"
 title: Slack
 description: Archive Slack workspaces through the Web API or a Slackdump export.
 ---
@@ -55,6 +55,10 @@ on the daemon host with `--local`; msgvault does not upload the export from a
 client machine.
 
 ## Prerequisites
+
+Use an internal app's user token, or your own [browser session](#browser-session).
+The app token lets you restrict permissions. A browser session has the permissions
+of your signed-in account.
 
 Create an internal Slack app in each workspace and obtain a **user token**:
 
@@ -127,6 +131,36 @@ rather than every public channel. Optionally add `files:read` for file downloads
 and `search:read` for faster discovery of replies. `reactions:read` and
 `team:read` are not needed by the importer.
 
+### Browser session
+
+To use your own browser session, supply its `xoxc-…` token and raw `d` cookie
+value together. Use files readable only by your account:
+
+```bash
+msgvault add-slack --token-file ~/slack-session.txt --cookie-file ~/slack-cookie.txt
+```
+
+`MSGVAULT_SLACK_TOKEN` and `MSGVAULT_SLACK_COOKIE` are alternative inputs. Do not
+supply a full `Cookie` header. msgvault validates the pair with `auth.test` and
+stores both values in the same protected credential file. Manual sync, scheduled
+sync, and file backfill reuse that pair. Remove temporary input files after registration.
+
+Protect this pair like a password. It authenticates your Slack session and is
+not restricted to read-only permissions. The msgvault client permits only read
+methods and sends the cookie only to its Slack API endpoint and `files.slack.com`.
+API redirects are refused. File redirects cannot carry credentials to another
+host or use an insecure connection.
+
+Browser sessions archive your memberships and DMs, not every public channel.
+Conversation filters and media policies still apply. msgvault attempts search
+and file downloads without requiring an OAuth scope header; Slack's permission
+checks remain authoritative. A permission failure stops the operation instead
+of granting access to additional conversations.
+
+This authentication is unofficial and can expire or change. If Slack rejects
+the session, obtain a fresh token and cookie and run `add-slack` again. An
+internal app token remains the supported alternative for limited permissions.
+
 ## Add a workspace
 
 ```bash
@@ -194,9 +228,10 @@ rescan is skipped while a limit is set.
 
 ### How thread replies are found
 
-The importer reads the token's granted scopes from Slack's `X-OAuth-Scopes`
-response header. Without `search:read`, it revisits each selected conversation's
-history and fetches its threads directly. A message that gains its first reply
+For app tokens, the importer reads granted scopes from Slack's `X-OAuth-Scopes`
+response header. Browser sessions attempt search and file downloads without this
+header. For app tokens without `search:read`, msgvault revisits each selected
+conversation's history and fetches its threads directly. A message that gains its first reply
 long after the initial sync is discovered by that history walk. Interrupted and
 limited walks retain their cursors, and new channel messages get an incremental
 pass between completed walks. An interrupted sync also remembers which

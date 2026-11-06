@@ -101,7 +101,10 @@ func (c *Client) DownloadFile(ctx context.Context, rawURL string, maxBytes int64
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.token)
+	if err := (Credentials{Token: c.token, Cookie: c.cookie}).Validate(); err != nil {
+		return nil, err
+	}
+	c.authenticate(req)
 	client := &http.Client{
 		Timeout: attachmentpolicy.DownloadTimeout(maxBytes),
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
@@ -116,10 +119,16 @@ func (c *Client) DownloadFile(ctx context.Context, rawURL string, maxBytes int64
 				return fmt.Errorf(
 					"slack file GET: refusing non-HTTPS redirect to %s", req.URL.Host)
 			}
+			// Userinfo on a hop would let the target rewrite the credentials
+			// the request carries.
+			if req.URL.User != nil {
+				return errors.New("slack file GET: refused unsafe redirect")
+			}
 			// Carrying the token to another host would hand it to whoever
 			// controls that host. The signed redirect target does not need it.
 			if !strings.EqualFold(req.URL.Host, mediaHost) {
 				req.Header.Del("Authorization")
+				req.Header.Del("Cookie")
 			}
 			return nil
 		},
