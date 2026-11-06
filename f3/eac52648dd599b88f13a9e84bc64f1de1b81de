@@ -1,0 +1,68 @@
+internal/clirun/env.go
+  s_0252e2e051e714::t_7475ba231b60c3 36
+  s_0252e2e051e714::t_64d4fa4352d706 25-27
+internal/slack/credentials.go
+  s_0252e2e051e714::t_6bd7cedf4ea293 1-74
+internal/slack/importer.go
+  s_0252e2e051e714::t_7d39dfd58965d3 282
+  s_0252e2e051e714::t_17674af4041809 294
+cmd/msgvault/cmd/add_slack.go
+  s_0252e2e051e714::t_432e6bc38428cf 58-65
+  s_0252e2e051e714::t_ce27fd6dc7585c 30-31
+  s_0252e2e051e714::t_a33625aef19a79 89-96,98-99
+  s_0252e2e051e714::t_26cb59dbae9cab 120
+  s_0252e2e051e714::t_ee738ac5f19ffd 75
+  s_0252e2e051e714::t_421fa4252f1301 107-114
+  s_0252e2e051e714::t_7285511a664f72 168-185
+  s_0252e2e051e714::t_ddea534b24d5a4 41
+  s_0252e2e051e714::t_6ef1c97fc1f50e 153
+  s_0252e2e051e714::t_ff03061042e564 25-26
+internal/slack/client.go
+  s_0252e2e051e714::t_3d70bb0f1af229 274
+  s_0252e2e051e714::t_bbe9357ea44ddd 97
+  s_0252e2e051e714::t_c3f55c658a17dd 120-127
+  s_0252e2e051e714::t_bfb947f9434f97 160-162
+  s_0252e2e051e714::t_b15c70ee97c795 177
+internal/slack/media.go
+  s_0252e2e051e714::t_b2c2d8a8c6df25 117-119,122
+  s_0252e2e051e714::t_cb63e75ac426b4 104-107
+internal/slack/credentials_test.go
+  s_0252e2e051e714::t_a266808a042865 9
+  s_0252e2e051e714::t_90540eb7f025a9 1-8,10-59,63-230
+  s_0252e2e051e714::t_1b15497f7cf66f 60-62
+internal/slack/token.go
+  s_0252e2e051e714::t_b4cdc3a5e97d77 12-13,16,26,28-35,40-41,46,52-53,55-67,71,73,77,80,83-96
+docs/cli-reference.md
+  s_0252e2e051e714::t_a929a0821e8cd6 1838
+  s_0252e2e051e714::t_f37bce2d3394d7 1819-1827
+cmd/msgvault/cmd/add_slack_session_test.go
+  s_0252e2e051e714::t_44df7297d47a05 1-40,42-99
+  s_0252e2e051e714::t_60dc5bd8d6cca4 41
+docs/usage/slack.md
+  s_0252e2e051e714::t_3e33b821ca0180 59-62
+  s_0252e2e051e714::t_11522f6c92c5bf 2
+  s_0252e2e051e714::t_b201ed99a6489c 134-163
+  s_0252e2e051e714::t_24f889832599d4 231-234
+cmd/msgvault/cmd/add_slack_test.go
+  s_0252e2e051e714::t_094a031500d65a 45-46
+cmd/msgvault/cmd/backfill_slack_media.go
+  s_0252e2e051e714::t_f98aee0cb5471a 65,70
+cmd/msgvault/cmd/sync_slack.go
+  s_0252e2e051e714::t_24dc6403fb1de1 90,95,275,279
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "f3eac52648dd599b88f13a9e84bc64f1de1b81de",
+  "prompts": {},
+  "sessions": {
+    "s_0252e2e051e714": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c29645a4-0668-450a-a509-0a81a6f23d5d",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}
