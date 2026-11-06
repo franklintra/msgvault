@@ -1,0 +1,49 @@
+internal/store/email_reply_links_test.go
+  s_c90c40fff7b7b6::t_9281869f806a0a 1-23,25-161
+  s_c90c40fff7b7b6::t_e0c81954fa0964 162-181
+internal/store/email_headers.go
+  s_c90c40fff7b7b6::t_6fa53bd232530b 10,12,150-256,272-273,284-397,419-425,429-430,432-449,453,456-523
+internal/store/messages.go
+  s_c90c40fff7b7b6::t_603babdd565ef2 113-116,2497-2501
+internal/sync/email_replies_test.go
+  s_c90c40fff7b7b6::t_58eb1fad8a70c2 1-138,140-145
+  s_c90c40fff7b7b6::t_2ee36f498ce5b9 146
+internal/rederive/email_replies_test.go
+  s_c90c40fff7b7b6::t_134b159433ef08 1-19,21-118
+internal/rederive/email_replies.go
+  s_c90c40fff7b7b6::t_1a74bbb5c3b525 1-169
+docs/architecture/storage.md
+  s_c90c40fff7b7b6::t_97ffce83255bac 72-83
+internal/importer/eml_import.go
+  s_c90c40fff7b7b6::t_03b3d7a86aca66 339
+internal/importer/mbox_import.go
+  s_c90c40fff7b7b6::t_df92dab9903478 567
+internal/importer/mbox_import_test.go
+  s_c90c40fff7b7b6::t_3b216e15f106df 959-991
+internal/msmail/importer.go
+  s_c90c40fff7b7b6::t_0de22ef158701e 225
+internal/rederive/account_attribution.go
+  s_c90c40fff7b7b6::t_85aac138796f5d 15-21,41-42
+internal/sync/imap_content.go
+  s_c90c40fff7b7b6::t_ec2236c1fb7351 21-22
+internal/sync/prepared_snapshot.go
+  s_c90c40fff7b7b6::t_df43e9b45f485e 57-59
+internal/sync/sync.go
+  s_c90c40fff7b7b6::t_8c5164d594a25d 1229-1234,1711,1902-1906,1909-1913,1923,1978-1986
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1e33a2744b542d0ef6210b85167ec04385ac3bbd",
+  "prompts": {},
+  "sessions": {
+    "s_c90c40fff7b7b6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6b9adc00-3c6a-42cb-be71-b273295661f8",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}
