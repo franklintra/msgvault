@@ -1,0 +1,33 @@
+cmd/msgvault/cmd/imap_relocation_integration_test.go
+  s_7cf9f52cd78232::t_f54e0d5a104bc6 129-203
+cmd/msgvault/cmd/syncfull.go
+  s_7cf9f52cd78232::t_1df31615aef6ad 441-442,449,505-507,530
+internal/imap/client.go
+  s_7cf9f52cd78232::t_147d58ae47807d 149
+internal/imap/flag_refresh.go
+  s_7cf9f52cd78232::t_500c3d41027adb 21-24,26,36-37,39,165,215-220,222-223
+internal/imap/flag_refresh_test.go
+  s_7cf9f52cd78232::t_b5b04923c30051 5,47
+internal/imap/folderstate.go
+  s_7cf9f52cd78232::t_9a4badb80c3cc3 24-28,61-75,85,95
+internal/store/imap_memberships.go
+  s_7cf9f52cd78232::t_a5fbf926b8f2a1 28-32,158-160,175,184,195,210-211,230,878,1032,1035-1044,1077-1081
+internal/store/imap_memberships_test.go
+  s_7cf9f52cd78232::t_d5272d482c9941 1019-1020,1037,1040-1041,1044,1048
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e6faecf8cc37ff86caf653b8b5af9b59f5ed0b4c",
+  "prompts": {},
+  "sessions": {
+    "s_7cf9f52cd78232": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ef70ef64-e00e-49eb-a4b0-cbfca0c24fc1",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}
