@@ -26,7 +26,7 @@ appear in full under Inherited Flags.
 | Export | [export-messages](#export-messages), [export-eml](#export-eml), [export-attachments](#export-attachments), [create-subset](#create-subset) |
 | Review and remove mail | [stage-delete](#stage-delete), [delete-staged](#delete-staged), [deduplicate](#deduplicate), [gc](#gc) |
 | Back up and manage attachment storage | [backup](#backup), [pack-attachments](#pack-attachments), [purge-excluded-media](#purge-excluded-media) |
-| Repair older records | [repair-identity](#repair-identity), [repair-senders](#repair-senders), [repair-message](#repair-message), [repair-derived](#repair-derived), [repair-labels](#repair-labels), [repair-list-ids](#repair-list-ids), [repair-dates](#repair-dates) |
+| Repair older records | [repair-identity](#repair-identity), [repair-senders](#repair-senders), [repair-message](#repair-message), [repair-derived](#repair-derived), [repair-attachment-roles](#repair-attachment-roles), [repair-labels](#repair-labels), [repair-list-ids](#repair-list-ids), [repair-dates](#repair-dates) |
 | Operate or integrate | [setup](#setup), [credentials](#credentials), [daemon](#daemon), [serve](#serve), [activity](#activity), [mcp](#mcp), [query](#query), [openapi](#openapi), [agent-token](#agent-token) |
 
 ## loops
@@ -5266,6 +5266,28 @@ email and calendar rows still pending it, so `received:` and `account:` find
 them. Source syncs and imports run the same work first, so use this command
 for on-demand repair, file imports you will not run again, or retrying an
 interrupted pass.
+
+## repair-attachment-roles
+
+Classify email attachments archived before msgvault recorded attachment roles,
+from the raw MIME stored with each message. The command does not contact a
+provider.
+
+```bash
+msgvault repair-attachment-roles
+```
+
+Older email attachments have the role `unknown`, so a filter cannot tell an
+image embedded in the message body, such as a signature logo, from a file
+attached to the message. The repair records `inline` or `standalone` for each
+attachment that matches exactly one MIME part. Attachments without retained MIME,
+or with ambiguous evidence, keep the role `unknown`.
+
+The command writes immediately and prints the number of messages scanned and
+attachments updated. It saves progress after each batch: an interrupted run
+resumes where it stopped, and a run after a completed pass returns at once.
+New email gets its role at import, so one completed pass is enough.
+[`documents build`](#documents) runs the same repair before it builds.
 
 ## gc
 

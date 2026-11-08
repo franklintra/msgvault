@@ -630,19 +630,6 @@ func runConsentMistral(
 	return nil
 }
 
-func repairHistoricalAttachmentRoles(ctx context.Context, st *store.Store) error {
-	const batchSize = 1000
-	for {
-		progress, err := st.RepairHistoricalAttachmentRolesBatch(ctx, batchSize)
-		if err != nil {
-			return fmt.Errorf("repair historical attachment roles: %w", err)
-		}
-		if progress.Completed {
-			return nil
-		}
-	}
-}
-
 func printDocumentConsentDisclosure(
 	w io.Writer,
 	documentsConfig *documentindex.DocumentsConfig,
@@ -741,7 +728,7 @@ func runBuildDocuments(
 	if !consentStatus.ProfileEnabled || !consentStatus.ExactConsent {
 		return fmt.Errorf("document build requires exact consent; run `%s`", documentConsentCommand(documentsConfig.Provider))
 	}
-	if err := repairHistoricalAttachmentRoles(command.Context(), st); err != nil {
+	if _, err := repairHistoricalAttachmentRoles(command.Context(), st, nil); err != nil {
 		return err
 	}
 	reconciler, err := documentindex.NewReconciler(st, documentindex.ReconcilerConfig{
