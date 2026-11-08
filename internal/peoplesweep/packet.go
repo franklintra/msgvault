@@ -19,7 +19,12 @@ import (
 	"go.kenn.io/msgvault/internal/personscope"
 )
 
+// extractionMaxOutputTokens is the default output cap of one extraction
+// request; [people.sweep] extraction_max_output_tokens overrides it.
 const extractionMaxOutputTokens = 4096
+
+// extractionMaxOutputTokensLimit bounds the configured cap.
+const extractionMaxOutputTokensLimit = 128_000
 
 type EvidencePacket struct {
 	PersonID          int64

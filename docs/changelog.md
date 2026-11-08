@@ -25,6 +25,7 @@ All notable changes to msgvault, grouped by release.
 
 ### New features
 
+- `[people.sweep] extraction_max_output_tokens` sets the output cap of each people sweep request (default 4096). Raise it for reasoning models whose answers were cut off and failed.
 - Import a LinkedIn member data export with
   [`import-linkedin`](usage/linkedin.md). DMs, your posts, and your own
   comments become searchable conversations. `--me` takes your profile URL and
