@@ -1,0 +1,14 @@
+docs/usage/matrix.md
+  h_ff7fffeafc4b76 140
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6403c26adfb1c84ae847d14f9d38c87c847ef9b0",
+  "prompts": {},
+  "humans": {
+    "h_ff7fffeafc4b76": {
+      "author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}
