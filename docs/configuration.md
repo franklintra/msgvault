@@ -1472,6 +1472,7 @@ enabled = true                    # gate for the daemon schedule
 schedule = "*/30 * * * *"         # 5-field cron; empty = manual sync only
 rooms = []                        # exact room-ID include filter (empty = all)
 exclude_rooms = []                # exact room IDs to skip; wins over rooms
+whatsapp_bridge_db = ""           # mautrix-whatsapp database; empty = off
 ```
 
 | Key | Default | Description |
@@ -1480,6 +1481,7 @@ exclude_rooms = []                # exact room IDs to skip; wins over rooms
 | `schedule` | — | Cron expression used by `msgvault serve` |
 | `rooms` | all joined rooms | Exact Matrix room IDs to sync |
 | `exclude_rooms` | — | Exact Matrix room IDs to skip; exclusions win over inclusions |
+| `whatsapp_bridge_db` | — | SQLite database of a local mautrix-whatsapp bridge; its portal rooms are archived into native `whatsapp` sources instead of as Matrix rooms (see [Matrix](/docs/usage/matrix/#whatsapp-through-mautrix-whatsapp)) |
 
 ### `[beeper]`
 
