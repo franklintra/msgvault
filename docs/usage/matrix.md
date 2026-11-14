@@ -96,6 +96,46 @@ Recovery runs after joined-room history finishes. The pending count includes all
 Matrix messages use per-message semantic indexing. Once imported, their text is
 available to keyword, semantic, and people workflows enabled for the archive.
 
+## WhatsApp through mautrix-whatsapp
+
+A [mautrix-whatsapp](https://github.com/mautrix/whatsapp) bridge puts each
+WhatsApp chat in a Matrix portal room. Archived as ordinary Matrix rooms,
+those messages would name senders by Matrix ghost IDs, without phone numbers,
+and would never match messages that `import-whatsapp` stores from WhatsApp
+Desktop. When the bridge runs on the same host as msgvault, point `[matrix]`
+at its database instead:
+
+```toml
+[matrix]
+whatsapp_bridge_db = "/opt/whatsapp-matrix/wa/mautrix-whatsapp.db"
+```
+
+Each Matrix sync then skips the portal rooms and archives them into one
+`whatsapp` source per number the account linked to the bridge, the same
+source that `import-whatsapp --phone` uses for that number:
+
+- The message ID is the WhatsApp message ID, so a message that both the bridge
+  and a WhatsApp Desktop import see is stored once. A row that another
+  importer stored first stays as it is.
+- Conversations use the Desktop importer's keys (`<digits>@s.whatsapp.net`
+  for direct chats, the group JID for groups).
+- Senders resolve to phone numbers through the bridge's LID map and carry
+  `whatsapp` identifiers. A contact name from the linked phone only fills a
+  blank display name.
+- Media messages are stored with a label and caption, as for Matrix (for
+  example `[image] caption`). The media itself is not downloaded.
+- Edits from the original sender replace the body; replies link to the
+  message they quote.
+- The raw form (`raw_format = matrix_whatsapp_json`) holds the Matrix event,
+  the edit that supplied the body, and the WhatsApp chat, sender and message
+  IDs.
+
+msgvault opens the bridge database read-only. The first run for a number
+imports everything the bridge has; later runs revisit the last seven days, and
+`sync-matrix --full` revisits everything. The bridge only knows messages from
+the moment a number was linked (or what its history sync delivered), so keep
+an earlier WhatsApp Desktop import for older history.
+
 ## Current limits
 
 - Legacy recovery keys outside Matrix secret storage are unsupported.

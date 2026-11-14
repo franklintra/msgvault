@@ -1807,6 +1807,11 @@ type MatrixConfig struct {
 	Schedule     string   `toml:"schedule"`
 	Rooms        []string `toml:"rooms"`
 	ExcludeRooms []string `toml:"exclude_rooms"`
+	// WhatsAppBridgeDB is the SQLite database of a mautrix-whatsapp bridge
+	// that the Matrix account uses. Its portal rooms are archived into
+	// native whatsapp sources, one per bridge login, instead of as Matrix
+	// rooms. Empty disables it.
+	WhatsAppBridgeDB string `toml:"whatsapp_bridge_db"`
 }
 
 // SlackConfig configures Slack workspace archive sources ([slack] table).

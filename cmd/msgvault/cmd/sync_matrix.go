@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
+	"slices"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -75,6 +76,7 @@ func runMatrixSync(ctx context.Context, s *store.Store, cfg *config.Config, acco
 			continue
 		}
 		var summary *matrixsource.ImportSummary
+		var bridgeSummary *matrixsource.WhatsAppBridgeSummary
 		var needsBackupKey bool
 		var homeserver string
 		skippedRetired := false
@@ -102,6 +104,21 @@ func runMatrixSync(ctx context.Context, s *store.Store, cfg *config.Config, acco
 			if openErr != nil {
 				return openErr
 			}
+			excludeRooms := cfg.Matrix.ExcludeRooms
+			var bridge *matrixsource.WhatsAppBridge
+			if cfg.Matrix.WhatsAppBridgeDB != "" {
+				var bridgeErr error
+				bridge, bridgeErr = matrixsource.OpenWhatsAppBridge(ctx, cfg.Matrix.WhatsAppBridgeDB)
+				if bridgeErr != nil {
+					return bridgeErr
+				}
+				defer func() { _ = bridge.Close() }()
+				portals, bridgeErr := bridge.PortalRooms(ctx)
+				if bridgeErr != nil {
+					return bridgeErr
+				}
+				excludeRooms = append(slices.Clone(excludeRooms), portals...)
+			}
 			imp := matrixsource.NewImporter(s, runtime)
 			var preferences matrixSyncPreferences
 			if current.SyncConfig.Valid {
@@ -114,11 +131,18 @@ func runMatrixSync(ctx context.Context, s *store.Store, cfg *config.Config, acco
 			var importErr error
 			summary, importErr = imp.Import(ctx, matrixsource.ImportOptions{
 				UserID: current.Identifier, Full: full, SkipKeyBackup: skipKeyBackup,
-				Rooms: cfg.Matrix.Rooms, ExcludeRooms: cfg.Matrix.ExcludeRooms,
+				Rooms: cfg.Matrix.Rooms, ExcludeRooms: excludeRooms,
 				Progress: progress,
 			})
 			if importErr == nil && creds.BackupKey == "" {
 				needsBackupKey = summary.PendingEncrypted > 0 && !skipKeyBackup
+			}
+			if bridge != nil {
+				var bridgeErr error
+				bridgeSummary, bridgeErr = matrixsource.ImportWhatsAppBridge(ctx, s, runtime, bridge, matrixsource.WhatsAppBridgeOptions{
+					UserID: current.Identifier, Full: full, Progress: progress,
+				})
+				importErr = errors.Join(importErr, bridgeErr)
 			}
 			return importErr
 		})
@@ -132,6 +156,11 @@ func runMatrixSync(ctx context.Context, s *store.Store, cfg *config.Config, acco
 		}
 		_, _ = fmt.Fprintf(out, "Matrix %s: %d rooms, %d messages, %d encrypted placeholders, %d messages recovered, %d unsupported events skipped\n",
 			source.Identifier, summary.RoomsProcessed, summary.MessagesProcessed, summary.PendingEncrypted, summary.Recovered, summary.EventsSkipped)
+		if bridgeSummary != nil {
+			_, _ = fmt.Fprintf(out, "WhatsApp bridge %s: %d logins (%d busy), %d messages, %d added, %d updated, %d deleted\n",
+				source.Identifier, bridgeSummary.Logins, bridgeSummary.LoginsBusy, bridgeSummary.MessagesProcessed,
+				bridgeSummary.MessagesAdded, bridgeSummary.MessagesUpdated, bridgeSummary.MessagesDeleted)
+		}
 		if needsBackupKey && !backupHintShown {
 			backupHintShown = true
 			_, _ = fmt.Fprintf(out, "To recover encrypted history, run msgvault add-matrix --homeserver %q --user-id %q --recovery-file <path>. This renews the login and logs out the old Matrix device.\n", homeserver, source.Identifier)
