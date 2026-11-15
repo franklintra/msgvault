@@ -1,0 +1,29 @@
+internal/imap/nilconn_test.go
+  s_e57279bd621a92::t_8e008933cae86d 1-31
+internal/imap/nilconn.go
+  s_e57279bd621a92::t_e4ffb1273ef05f 1-67
+internal/imap/batch_fetch.go
+  s_e57279bd621a92::t_e19f44bc208b25 339,355,540
+internal/imap/client.go
+  s_e57279bd621a92::t_a12ce382841121 596,610,624,952,965
+internal/imap/folderstate.go
+  s_e57279bd621a92::t_1f990c140a9bfb 322,324,332
+internal/imap/qresync.go
+  s_e57279bd621a92::t_2c7ee7c7ac866b 78,85,159,203,209,378,380
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8fc9994405af4a11816763304969786d2eb7b503",
+  "prompts": {},
+  "sessions": {
+    "s_e57279bd621a92": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1a037310-29a7-412a-81e0-c14424ae671a",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}
