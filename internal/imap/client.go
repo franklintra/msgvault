@@ -593,7 +593,7 @@ func (c *Client) selectMailbox(mailbox string) error {
 	if c.selectedMailbox == mailbox {
 		return nil
 	}
-	data, err := c.conn.Select(mailbox, nil).Wait()
+	data, err := c.connSelect(mailbox, nil)
 	if err != nil {
 		return fmt.Errorf("SELECT %q: %w", mailbox, err)
 	}
@@ -607,7 +607,7 @@ func (c *Client) selectMailbox(mailbox string) error {
 // server advertises support. Sending extended LIST options to legacy servers
 // can make otherwise valid mailbox enumeration fail.
 func (c *Client) listOptionsLocked() *imap.ListOptions {
-	if !c.conn.Caps().Has(imap.CapSpecialUse) {
+	if !c.connCaps().Has(imap.CapSpecialUse) {
 		return nil
 	}
 	return &imap.ListOptions{ReturnSpecialUse: true}
@@ -621,7 +621,7 @@ func (c *Client) listMailboxesLocked() ([]string, error) {
 		return c.mailboxCache, nil
 	}
 
-	items, err := c.conn.List("", "*", c.listOptionsLocked()).Collect()
+	items, err := c.connList(c.listOptionsLocked())
 	if err != nil {
 		return nil, fmt.Errorf("LIST: %w", err)
 	}
@@ -949,10 +949,7 @@ func (c *Client) enumerateMailbox(
 	}
 
 	criteria := enumerateMailboxSearchCriteria(c.since, c.before, minUID)
-	searchData, err := c.conn.UIDSearch(
-		criteria,
-		nil,
-	).Wait()
+	searchData, err := c.connUIDSearch(criteria)
 	if err != nil {
 		if isNetworkError(err) {
 			c.logger.Warn("network error during UID SEARCH, reconnecting",
@@ -965,10 +962,7 @@ func (c *Client) enumerateMailbox(
 			if selErr := c.selectMailbox(mailbox); selErr != nil {
 				return nil, selErr
 			}
-			searchData, err = c.conn.UIDSearch(
-				criteria,
-				nil,
-			).Wait()
+			searchData, err = c.connUIDSearch(criteria)
 			if err != nil {
 				return nil, fmt.Errorf("UID SEARCH after reconnect in mailbox %q: %w", mailbox, err)
 			}

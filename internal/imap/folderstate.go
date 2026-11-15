@@ -319,9 +319,9 @@ func (c *Client) statusFolder(ctx context.Context, mailbox string) (FolderState,
 		NumMessages:   true,
 		UIDNext:       true,
 		UIDValidity:   true,
-		HighestModSeq: c.conn.Caps().Has(imap.CapCondStore),
+		HighestModSeq: c.connCaps().Has(imap.CapCondStore),
 	}
-	data, err := c.conn.Status(mailbox, opts).Wait()
+	data, err := c.connStatus(mailbox, opts)
 	if err != nil && isNetworkError(err) {
 		c.logger.Warn("network error during STATUS, reconnecting",
 			"mailbox", mailbox, "error", err)
@@ -329,7 +329,7 @@ func (c *Client) statusFolder(ctx context.Context, mailbox string) (FolderState,
 			return FolderState{}, fmt.Errorf(
 				"reconnect failed during STATUS of %q: %w", mailbox, reconErr)
 		}
-		data, err = c.conn.Status(mailbox, opts).Wait()
+		data, err = c.connStatus(mailbox, opts)
 	}
 	if err != nil {
 		return FolderState{}, fmt.Errorf("STATUS %q: %w", mailbox, err)

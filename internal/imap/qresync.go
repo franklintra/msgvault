@@ -75,14 +75,14 @@ func (c *Client) qresyncEligible(prior, current FolderState) bool {
 }
 
 func (c *Client) enableQresync() bool {
-	caps := c.conn.Caps()
+	caps := c.connCaps()
 	if !caps.Has(imap.CapEnable) || !caps.Has(imap.CapQResync) {
 		return false
 	}
 	if c.qresyncEnabled {
 		return true
 	}
-	data, err := c.conn.Enable(imap.CapQResync).Wait()
+	data, err := c.connEnable()
 	if err != nil || data == nil || !data.Caps.Has(imap.CapQResync) {
 		return false
 	}
@@ -156,7 +156,7 @@ func (c *Client) collectQresyncMailbox(
 	ctx context.Context, mailbox string, prior FolderState,
 ) (MailboxDelta, error) {
 	c.clearQresyncCapture()
-	selected, err := c.conn.Select(mailbox, &imap.SelectOptions{CondStore: true}).Wait()
+	selected, err := c.connSelect(mailbox, &imap.SelectOptions{CondStore: true})
 	if err != nil {
 		return MailboxDelta{}, fmt.Errorf("CONDSTORE SELECT %q: %w", mailbox, err)
 	}
@@ -200,13 +200,13 @@ func (c *Client) collectQresyncMailbox(
 		}
 		c.beginQresyncCapture()
 		defer c.clearQresyncCapture()
-		msgs, fetchErr := c.conn.Fetch(requestedUIDs, &imap.FetchOptions{
+		msgs, fetchErr := c.connFetch(requestedUIDs, &imap.FetchOptions{
 			UID:          true,
 			Flags:        true,
 			ModSeq:       true,
 			ChangedSince: prior.HighestModSeq,
 			Vanished:     true,
-		}).Collect()
+		})
 		if fetchErr != nil {
 			return MailboxDelta{}, fmt.Errorf("QRESYNC UID FETCH in %q: %w", mailbox, fetchErr)
 		}
@@ -375,9 +375,9 @@ func (c *Client) refreshExistingQresyncChanges(
 			requested.AddNum(uid)
 		}
 
-		msgs, err := c.conn.Fetch(requested, &imap.FetchOptions{
+		msgs, err := c.connFetch(requested, &imap.FetchOptions{
 			UID: true, Flags: true, ModSeq: true,
-		}).Collect()
+		})
 		if err != nil {
 			return fmt.Errorf("QRESYNC existing-message refresh in %q: %w", mailbox, err)
 		}

@@ -336,7 +336,7 @@ func (c *Client) fetchChunk(
 	uidSet imap.UIDSet,
 	fetchOpts *imap.FetchOptions,
 ) (msgs []*imapclient.FetchMessageBuffer, fatal bool, err error) {
-	msgs, err = c.conn.Fetch(uidSet, fetchOpts).Collect()
+	msgs, err = c.connFetch(uidSet, fetchOpts)
 	if err == nil {
 		return msgs, false, nil
 	}
@@ -352,7 +352,7 @@ func (c *Client) fetchChunk(
 		c.logger.Warn("mailbox reselect failed after reconnect", "mailbox", mailbox, "error", selErr)
 		return nil, true, selErr
 	}
-	msgs, err = c.conn.Fetch(uidSet, fetchOpts).Collect()
+	msgs, err = c.connFetch(uidSet, fetchOpts)
 	if err != nil {
 		c.logger.Warn("UID FETCH failed after reconnect", "mailbox", mailbox, "error", err)
 		return nil, false, fmt.Errorf("UID FETCH after reconnect in mailbox %q: %w", mailbox, err)
@@ -537,8 +537,7 @@ func (c *Client) confirmOmittedPresent(
 	for _, uid := range omitted {
 		uidSet.AddNum(uid)
 	}
-	searchData, err := c.conn.UIDSearch(
-		&imap.SearchCriteria{UID: []imap.UIDSet{uidSet}}, nil).Wait()
+	searchData, err := c.connUIDSearch(&imap.SearchCriteria{UID: []imap.UIDSet{uidSet}})
 	if err != nil {
 		c.logger.Warn("could not confirm UIDs missing from a FETCH response",
 			"mailbox", mailbox, "uids", len(omitted), "error", err)
