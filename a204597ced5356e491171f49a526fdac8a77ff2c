@@ -1,0 +1,23 @@
+internal/store/document_publication.go
+  s_759e0432d345bf::t_6e0b56f1386502 137-152,320-325,456-464
+internal/store/document_publication_test.go
+  s_759e0432d345bf::t_7b1d6eb928c218 56-106
+internal/store/export_test.go
+  s_759e0432d345bf::t_71c66eb70fbaf5 383-394
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a204597ced5356e491171f49a526fdac8a77ff2c",
+  "prompts": {},
+  "sessions": {
+    "s_759e0432d345bf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ddb4dae6-2cd9-49ae-ae69-66fbdf85e02a",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+internal/config/config.go
+  h_ff7fffeafc4b76 1852
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3dc71717e81e8e8285da7f8215630b48956fd7d8",
+  "prompts": {},
+  "humans": {
+    "h_ff7fffeafc4b76": {
+      "author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}

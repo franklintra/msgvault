@@ -1,0 +1,21 @@
+internal/matrix/whatsapp_bridge.go
+  s_512bd8aecfcb95::t_ef4b1c4da900a0 203-205,551-558
+internal/matrix/whatsapp_bridge_test.go
+  s_512bd8aecfcb95::t_761d2d1f867f70 108-109,122-126,177,236-237
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b937450ac225bd91fea517f818d3397d46229677",
+  "prompts": {},
+  "sessions": {
+    "s_512bd8aecfcb95": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "cb526607-72e7-4d78-8dd1-eebc0bb98182",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}

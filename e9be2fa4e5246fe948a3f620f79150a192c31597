@@ -1,0 +1,23 @@
+web/src/lib/components/directory/attribute-value.ts
+  s_8b8a77d49a1339::t_500d9bbb24c2f6 32-42
+web/src/lib/components/people/PersonFields.svelte
+  s_8b8a77d49a1339::t_26cb8e6cf12abd 16,201-207,254
+web/src/lib/components/people/PersonFields.test.ts
+  s_8b8a77d49a1339::t_af08b4113105df 284-304
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e9be2fa4e5246fe948a3f620f79150a192c31597",
+  "prompts": {},
+  "sessions": {
+    "s_8b8a77d49a1339": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b18f7e9b-eb10-48d8-8cc5-e5ce66d87a70",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}

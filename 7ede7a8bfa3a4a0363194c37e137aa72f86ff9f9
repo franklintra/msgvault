@@ -1,0 +1,30 @@
+internal/store/messages.go
+  s_7cf9f52cd78232::t_531e4b5fa6b0ec 2278-2282
+internal/store/email_headers.go
+  s_7cf9f52cd78232::t_627bd1ec3c4539 84-86,321-322,329,343,408,413,471-472,475,479
+  s_7cf9f52cd78232::t_4577b38e910217 11,288-310,312,316,320,326,330-334,355-359,362-399,401,405-406,409-412,414-415,418,421,424-427,431-432,434,453-470,473-474,476-478,480-489
+docs/architecture/storage.md
+  s_7cf9f52cd78232::t_067fd87f3fb862 78-87
+internal/rederive/email_replies.go
+  s_7cf9f52cd78232::t_1202ea6dff7ec4 18-19,22-29,39-42,102-104,107,110,128-131,134,160,162-165,175-192
+internal/rederive/email_replies_test.go
+  s_7cf9f52cd78232::t_7e3097afd6da6b 73,95,119-169
+internal/store/email_reply_links_test.go
+  s_7cf9f52cd78232::t_50b2bf52b959b6 6,81-99,112,121,124,146-187
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "7ede7a8bfa3a4a0363194c37e137aa72f86ff9f9",
+  "prompts": {},
+  "sessions": {
+    "s_7cf9f52cd78232": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ef70ef64-e00e-49eb-a4b0-cbfca0c24fc1",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}

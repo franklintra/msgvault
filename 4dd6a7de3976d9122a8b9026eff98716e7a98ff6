@@ -1,0 +1,25 @@
+cmd/msgvault/cmd/serve_test.go
+  s_d4e59092c6ab9f::t_bbe72c802165d5 157-251,255-258,260-271
+  s_d4e59092c6ab9f::t_647f3de6f7d05d 7,13
+  s_d4e59092c6ab9f::t_998a9450924721 252-254,259
+  s_d4e59092c6ab9f::t_662dda6520cda7 11
+cmd/msgvault/cmd/serve.go
+  s_d4e59092c6ab9f::t_dab6d7b901f28e 357-364,366-367,369-370,372,375-378
+  s_d4e59092c6ab9f::t_7c1a2ad5e33a45 334-346,349,351,353-356,365,368,371,373-374,379-442,453,457,462,467,469,490,498,503,505-506,508-518,520-527,530-543
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.11",
+  "base_commit_sha": "4dd6a7de3976d9122a8b9026eff98716e7a98ff6",
+  "prompts": {},
+  "sessions": {
+    "s_d4e59092c6ab9f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2d7ef5f6-9cd3-4318-98bb-1bcfe9dde8f7",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}

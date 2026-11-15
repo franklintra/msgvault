@@ -1,0 +1,21 @@
+internal/importer/ingest.go
+  s_7cf9f52cd78232::t_eb8ed425a9a107 202-203,205-211,288-290
+internal/importer/ingest_cancel_test.go
+  s_7cf9f52cd78232::t_317872b2a84201 5-6,28,49,55,57,59,62-69
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "29ce55c962fb59afd0a5953e509085b5e36bf170",
+  "prompts": {},
+  "sessions": {
+    "s_7cf9f52cd78232": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ef70ef64-e00e-49eb-a4b0-cbfca0c24fc1",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}

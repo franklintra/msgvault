@@ -1,0 +1,19 @@
+internal/slack/media_test.go
+  s_1639cee6cc825a::t_61d028bb12f5a3 164-167,172-175,180,185-188,191,212,225,230,232-247,249-272
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a0fb5cc60c0b24915fbb234235accf3c0036e2fe",
+  "prompts": {},
+  "sessions": {
+    "s_1639cee6cc825a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e0c6263a-df52-4730-964c-c0c7a2e4abc0",
+        "model": "unknown"
+      },
+      "human_author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}

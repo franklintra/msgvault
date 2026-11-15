@@ -1,0 +1,33 @@
+cmd/msgvault/cmd/repair_attachment_roles_test.go
+  s_715ec7e833437d::t_b5e64d2e823789 1-134
+cmd/msgvault/cmd/repair_attachment_roles.go
+  s_715ec7e833437d::t_79efebac297ab3 1-98
+cmd/msgvault/cmd/documents.go
+  s_715ec7e833437d::t_ecd752d0f06b63 731
+cmd/msgvault/cmd/help_layout.go
+  s_715ec7e833437d::t_ff3bcc7e4a03c7 31-186
+cmd/msgvault/cmd/testdata/help/root.golden
+  s_715ec7e833437d::t_ee5cdc743fe931 162-179
+docs/cli-reference.md
+  s_715ec7e833437d::t_00212f3675d9ae 29,5269-5290
+internal/api/cli_handlers.go
+  s_715ec7e833437d::t_650cdb7753c51f 1822
+internal/api/handlers_test.go
+  s_715ec7e833437d::t_f919a19817d60e 1826
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "635d49a5ac77267b1a27d6f5031092fa8ef6a23d",
+  "prompts": {},
+  "sessions": {
+    "s_715ec7e833437d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "88ccec77-726e-4503-9fab-2b9058c849a5",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}

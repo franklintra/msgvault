@@ -1,0 +1,22 @@
+internal/personfacts/normalize_test.go
+  s_dc36fac26ed803::t_ac892debbc0f80 285-327
+internal/personfacts/normalize.go
+  s_dc36fac26ed803::t_4b7da5c848887f 192-270
+  s_dc36fac26ed803::t_6be4a777647a52 154
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4212a943406167f6cc65fb970357efbccecb34eb",
+  "prompts": {},
+  "sessions": {
+    "s_dc36fac26ed803": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "88f46b30-b8bb-425f-b6c8-3a6cf484b381",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}

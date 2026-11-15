@@ -1,0 +1,22 @@
+web/src/lib/components/saved-views/SavedViewsWorkspace.svelte
+  s_a67e20c85538e6::t_5fb9c03a0e82f5 356-357,361
+  s_a67e20c85538e6::t_0f4988b59cec82 319
+web/tests/shared-spacing.spec.ts
+  s_a67e20c85538e6::t_02cd3b373be35d 105-127
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d7f2c2cf170401a9f121d9a79a21bfe63ed741b6",
+  "prompts": {},
+  "sessions": {
+    "s_a67e20c85538e6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "eefa05eb-a1ca-46a7-af00-aac6c42cc95b",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}

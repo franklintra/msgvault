@@ -1,0 +1,21 @@
+internal/whatsapp/apple.go
+  s_61d0383ad8b2d3::t_3a486314703e49 561-569,574
+internal/whatsapp/apple_test.go
+  s_61d0383ad8b2d3::t_5c0a1bc5ed3db6 260-309
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "86047dd0e6736caa52e9eec363085b750c8c5184",
+  "prompts": {},
+  "sessions": {
+    "s_61d0383ad8b2d3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8e23a6b1-d348-4aba-a5b7-16c670816d8e",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Franklin Tranié <franklin.tranie@gmail.com>"
+    }
+  }
+}
